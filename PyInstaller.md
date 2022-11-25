@@ -70,11 +70,11 @@ docker pull python:3.7
 docker exec -it PyInstaller bash
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\进入容器.png" style="zoom:75%;" />
+<img src="Pic\进入容器.png" style="zoom:75%;" />
 
 在容器中对 Python 的信息进行查看，可以看到是一个纯净的环境，没有多余的库
 
-<img src="D:\文档\笔记\PyInstaller\Pic\python信息.png" style="zoom:75%;" />
+<img src="Pic\python信息.png" style="zoom:75%;" />
 
 如果需要的话，使用 pip config 更换国内源，避免网络问题
 
@@ -90,7 +90,7 @@ pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install pipenv
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\下载pipenv.png" style="zoom:75%;" />
+<img src="Pic\下载pipenv.png" style="zoom:75%;" />
 
 ## 3. 程序打包
 
@@ -107,7 +107,7 @@ cd /data/envs
 pipenv --python 3.7 # 在当前目录创建虚拟环境
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\创建env.png" style="zoom:75%;" />
+<img src="Pic\创建env.png" style="zoom:75%;" />
 
 在创建环境的目录下使用 pipenv shell，就会根据 Pipfile 进入到新建的环境中，命令行会有提示
 
@@ -117,7 +117,7 @@ pipenv --python 3.7 # 在当前目录创建虚拟环境
 pipenv shell # 进入到虚拟环境
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\进入env.png" style="zoom:75%;" />
+<img src="Pic\进入env.png" style="zoom:75%;" />
 
 接下来需要使用 pip 安装 PyInstaller 库
 
@@ -131,7 +131,7 @@ pip install pyinstaller
 
 然后在文件夹下放入需要镜像打包的脚本文件
 
-<img src="D:\文档\笔记\PyInstaller\Pic\进入code.png" style="zoom:75%;" />
+<img src="Pic\进入code.png" style="zoom:75%;" />
 
 在虚拟环境中安装必要的库，为了减小最终大小尽量排除无关的库
 
@@ -141,7 +141,7 @@ pip install pyinstaller
 pip install pandas numpy matplotlib psycopg2 docx
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\安装库.png" style="zoom:75%;" />
+<img src="Pic\安装库.png" style="zoom:75%;" />
 
 使用 pyinstaller -F 生成单个可执行文件，使用 --clean 清除缓存
 
@@ -157,11 +157,11 @@ build 文件夹包含了打包的依赖和加工的中间文件
 
 dist 文件夹包含最终打包的程序结果，如果指定了 -F 则输出单个文件，否则会输出一个目录
 
-<img src="D:\文档\笔记\PyInstaller\Pic\查看结果.png" style="zoom:75%;" />
+<img src="Pic\查看结果.png" style="zoom:75%;" />
 
 进入 dist 可以看到最终生成的可执行程序大小为 62.1 M
 
-<img src="D:\文档\笔记\PyInstaller\Pic\查看可执行程序.png" style="zoom:75%;" />
+<img src="Pic\查看可执行程序.png" style="zoom:75%;" />
 
 ## 4. 程序加密
 
@@ -197,13 +197,15 @@ def hello():
 
 ### 4.2 使用 PyInstaller 打包并加密
 
+参考：https://zhuanlan.zhihu.com/p/109266820
+
 在打包时加入 --key [密码] 进行加密
 
 ```shell
 pyinstaller -F --clean -key 123456 test.py
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\安装tinyaes.png" style="zoom:75%;" />
+<img src="Pic\安装tinyaes.png" style="zoom:75%;" />
 
 在 Linux 系统下使用 --key 参数会提示报错。需要额外安装 tinyaes 库来加密。如果是 Windows 平台则是安装 pycrypto 包，安装需要调用 VS 编译器等等步骤，比较麻烦。
 
@@ -217,7 +219,7 @@ pip install tinyaes
 
 在体积方面，加密的程序体积只增加 0.1M 左右，可以忽略
 
-<img src="D:\文档\笔记\PyInstaller\Pic\使用加密.png" style="zoom:75%;" />
+<img src="Pic\使用加密.png" style="zoom:75%;" />
 
 ## 5 减小程序的体积（效果不好）
 
@@ -240,7 +242,7 @@ tar -xcJf upx-upx-4.0.1-amd64_linux.tar.xz
 mv upx-4.0.1-amd64_linux upx
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\解压UPX.png" style="zoom:75%;" />
+<img src="Pic\解压UPX.png" style="zoom:75%;" />
 
 接下来有两种使用 UPX 的方式
 
@@ -252,7 +254,7 @@ mv upx-4.0.1-amd64_linux upx
 pyinstaller -F --clean --upx-dir /data/upx test2.py
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\使用UPX.png" style="zoom:75%;" />
+<img src="Pic\使用UPX.png" style="zoom:75%;" />
 
 第二种是在 PyInstaller 打包完成后再进行压缩
 
@@ -267,7 +269,7 @@ pyinstaller -F --clean test2.py
 /data/upx/upx --best dist/test2
 ```
 
-<img src="D:\文档\笔记\PyInstaller\Pic\使用UPX2.png" style="zoom:75%;" />
+<img src="Pic\使用UPX2.png" style="zoom:75%;" />
 
 ## 5.2 更改引入的方式
 
